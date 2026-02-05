@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
-import { PlusCircle, TrendingUp, TrendingDown, Trash2, Calendar } from 'lucide-react'
+import { useAuth } from '@/hooks/useAuth'
+import { useRouter } from 'next/navigation'
+import { PlusCircle, TrendingUp, TrendingDown, Trash2, Calendar, LogOut } from 'lucide-react'
 import { format } from 'date-fns'
 import { tr } from 'date-fns/locale'
 
@@ -29,6 +31,8 @@ type Category = {
 }
 
 export default function Home() {
+  const { user, loading: authLoading, signOut } = useAuth()
+  const router = useRouter()
   const [transactions, setTransactions] = useState<Transaction[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
@@ -41,11 +45,20 @@ export default function Home() {
   const [description, setDescription] = useState('')
   const [date, setDate] = useState(new Date().toISOString().split('T')[0])
 
+  // Auth kontrolü
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/login')
+    }
+  }, [user, authLoading, router])
+
   // Verileri yükle
   useEffect(() => {
-    fetchCategories()
-    fetchTransactions()
-  }, [])
+    if (user) {
+      fetchCategories()
+      fetchTransactions()
+    }
+  }, [user])
 
   const fetchCategories = async () => {
     const { data, error } = await supabase
@@ -61,6 +74,8 @@ export default function Home() {
   }
 
   const fetchTransactions = async () => {
+    if (!user) return
+    
     setLoading(true)
     const { data, error } = await supabase
       .from('transactions')
@@ -68,6 +83,7 @@ export default function Home() {
         *,
         category:categories(name, icon, color)
       `)
+      .eq('user_id', user.id)
       .order('date', { ascending: false })
       .order('created_at', { ascending: false })
     
@@ -80,7 +96,7 @@ export default function Home() {
   }
 
   const addTransaction = async () => {
-    if (!amount || !selectedCategory) {
+    if (!amount || !selectedCategory || !user) {
       alert('Lütfen tüm alanları doldurun')
       return
     }
@@ -89,6 +105,7 @@ export default function Home() {
       .from('transactions')
       .insert([
         {
+          user_id: user.id,
           amount: parseFloat(amount),
           type: transactionType,
           category_id: selectedCategory,
@@ -141,12 +158,39 @@ export default function Home() {
 
   const filteredCategories = categories.filter(c => c.type === transactionType)
 
+  const handleSignOut = async () => {
+    await signOut()
+    router.push('/login')
+  }
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-xl text-gray-600">Yükleniyor...</p>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return null
+  }
+
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
       <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-900">💰 Hesabım</h1>
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-gray-600">{user.email}</span>
+            <button
+              onClick={handleSignOut}
+              className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition"
+            >
+              <LogOut size={18} />
+              Çıkış
+            </button>
+          </div>
         </div>
       </header>
 
