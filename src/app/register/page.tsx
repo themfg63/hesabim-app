@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function RegisterPage() {
+  const [name, setName] = useState('')
+  const [surname, setSurname] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -18,6 +20,12 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+
+    // Validasyon
+    if (!name.trim() || !surname.trim()) {
+      setError('Ad ve Soyad alanları zorunludur')
+      return
+    }
 
     // Şifre kontrolü
     if (password !== confirmPassword) {
@@ -32,15 +40,14 @@ export default function RegisterPage() {
 
     setLoading(true)
 
-    const { error } = await signUp(email, password)
+    const { error: signUpError } = await signUp(name, surname, email, password)
 
-    if (error) {
-      setError(error.message)
+    if (signUpError) {
+      setError(signUpError)
       setLoading(false)
     } else {
-      // Kayıt başarılı - email onayı gerekiyorsa bilgilendir
-      alert('Kayıt başarılı! Giriş yapabilirsiniz.')
-      router.push('/login')
+      // Kayıt başarılı - otomatik giriş yapıldı
+      router.push('/dashboard')
     }
   }
 
@@ -49,6 +56,30 @@ export default function RegisterPage() {
       <h1>Kayıt Ol</h1>
       
       <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="name">Ad</label>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            autoComplete="given-name"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="surname">Soyad</label>
+          <input
+            id="surname"
+            type="text"
+            value={surname}
+            onChange={(e) => setSurname(e.target.value)}
+            required
+            autoComplete="family-name"
+          />
+        </div>
+
         <div>
           <label htmlFor="email">Email</label>
           <input

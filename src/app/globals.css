@@ -1,26 +1,400 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* İvosis Renk Paleti */
+  --color-ivosis-50: #effafc;
+  --color-ivosis-100: #d6f3f7;
+  --color-ivosis-200: #b3e6ee;
+  --color-ivosis-300: #7ed2e2;
+  --color-ivosis-400: #42b6ce;
+  --color-ivosis-500: #279ab3;
+  --color-ivosis-600: #24809c;
+  --color-ivosis-700: #23657b;
+  --color-ivosis-800: #245366;
+  --color-ivosis-900: #224657;
+  --color-ivosis-950: #112d3b;
+  /* Natural Renk Paleti */
+  --color-natural-50: #f6f6f6;
+  --color-natural-100: #e7e7e7;
+  --color-natural-200: #d1d1d1;
+  --color-natural-300: #b0b0b0;
+  --color-natural-400: #888888;
+  --color-natural-500: #6d6d6d;
+  --color-natural-600: #5d5d5d;
+  --color-natural-700: #4f4f4f;
+  --color-natural-800: #454545;
+  --color-natural-900: #3d3d3d;
+  --color-natural-950: #000000;
+  /* Yeşil Renk Paleti */
+  --color-greens-50: #f1f8f4;
+  --color-greens-100: #dcefe3;
+  --color-greens-200: #bbdfc9;
+  --color-greens-300: #8fc6a9;
+  --color-greens-400: #5fa884;
+  --color-greens-500: #40916c;
+  --color-greens-600: #2c6f52;
+  --color-greens-700: #235943;
+  --color-greens-800: #1e4736;
+  --color-greens-900: #193b2e;
+  --color-greens-950: #0d2119;
+  /* Kırmızı Renk Paleti */
+  --color-reds-50: #fdf3f3;
+  --color-reds-100: #fbe6e5;
+  --color-reds-200: #f9d0cf;
+  --color-reds-300: #f4afad;
+  --color-reds-400: #eb817e;
+  --color-reds-500: #df5754;
+  --color-reds-600: #cb3b37;
+  --color-reds-700: #a22c29;
+  --color-reds-800: #8d2a27;
+  --color-reds-900: #762826;
+  --color-reds-950: #3f1110;
+  
+  /* Font Family */
+  --font-family-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  body {
+    @apply bg-white text-gray-900;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
   }
 }
 
+@layer components {
+  /* İvosis Buton Stilleri */
+  .btn-primary {
+    @apply bg-ivosis-500 hover:bg-ivosis-600 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-ivosis-700 hover:bg-ivosis-800 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300;
+  }
+
+  .btn-outline {
+    @apply border-2 border-ivosis-500 text-ivosis-500 hover:bg-ivosis-500 hover:text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300;
+  }
+
+  .btn-ghost {
+    @apply text-ivosis-600 hover:text-ivosis-700 hover:bg-ivosis-50 font-semibold px-6 py-3 rounded-lg transition-all duration-300;
+  }
+
+  /* Kart Stilleri */
+  .card {
+    @apply bg-white rounded-xl shadow-lg p-6 border border-ivosis-100 hover:shadow-xl transition-shadow duration-300;
+  }
+
+  .card-hover {
+    @apply bg-white rounded-xl shadow-lg p-6 border border-ivosis-100 hover:shadow-2xl hover:border-ivosis-300 transition-all duration-300 cursor-pointer;
+  }
+
+  /* Badge/Etiket Stilleri */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-ivosis-100 text-ivosis-700;
+  }
+
+  /* Input Stilleri */
+  .input {
+    @apply w-full px-4 py-3 border border-ivosis-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-ivosis-500 focus:border-transparent transition-all duration-200;
+  }
+
+  /* Container */
+  .container-ivosis {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Gradient Arka Planlar */
+  .bg-gradient-ivosis {
+    @apply bg-linear-to-br from-ivosis-400 via-ivosis-500 to-ivosis-600;
+  }
+
+  .bg-gradient-ivosis-light {
+    @apply bg-linear-to-br from-ivosis-50 via-ivosis-100 to-ivosis-200;
+  }
+
+  /* Section Arka Planları */
+  .section-primary {
+    @apply bg-ivosis-500 text-white;
+  }
+
+  .section-light {
+    @apply bg-ivosis-50 text-ivosis-900;
+  }
+
+  .section-dark {
+    @apply bg-ivosis-950 text-white;
+  }
+}
+
+@layer utilities {
+  /* Özel Text Renkleri */
+  .text-ivosis {
+    @apply text-ivosis-500;
+  }
+
+  .text-ivosis-light {
+    @apply text-ivosis-300;
+  }
+
+  .text-ivosis-dark {
+    @apply text-ivosis-800;
+  }
+
+  /* Hover Efektleri */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  /* Scrollbar Gizleme */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Katalog - Gerçek Kitap 3D Flip */
+@layer components {
+  /* BOOK CONTAINER */
+  .catalog-book {
+    perspective: 2500px;
+    perspective-origin: center center;
+    position: relative;
+  }
+
+  /* CENTER SPINE - Kitap ortası */
+  .catalog-spine {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.08),
+      rgba(0, 0, 0, 0.15)
+    );
+    box-shadow:
+      -2px 0 4px rgba(0, 0, 0, 0.1),
+      2px 0 4px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* CANVAS BASE STYLE */
+  .catalog-canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: fill;
+    background: white;
+    border-radius: 0.5rem;
+  }
+
+  /* LEFT PAGE - NORMAL STATE */
+  .catalog-page-left {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform-origin: right center;
+    backface-visibility: hidden;
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5rem 0 0 0.5rem;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* LEFT PAGE - FLIPPING STATE (PREV) */
+  .catalog-page-left-flipping {
+    animation: catalog-left-flip-prev 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    z-index: 20;
+  }
+
+  /* RIGHT PAGE - NORMAL STATE */
+  .catalog-page-right {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    backface-visibility: hidden;
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.15);
+    border-radius: 0 0.5rem 0.5rem 0;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* MOBILE: Tek sayfa için border-radius */
+  @media (max-width: 639px) {
+    .catalog-page-right {
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  /* RIGHT PAGE - FLIPPING STATE (NEXT) */
+  .catalog-page-right-flipping {
+    animation: catalog-right-flip-next 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    z-index: 20;
+  }
+
+  /* DYNAMIC SHADOW - RIGHT PAGE (NEXT) */
+  .catalog-page-shadow-right {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.2) 15%,
+      rgba(0, 0, 0, 0.05) 40%,
+      transparent 60%
+    );
+    mix-blend-mode: multiply;
+    animation: catalog-shadow-fade-right 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    border-radius: 0 0.5rem 0.5rem 0;
+    z-index: 1;
+  }
+
+  /* DYNAMIC SHADOW - LEFT PAGE (PREV) */
+  .catalog-page-shadow-left {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.2) 15%,
+      rgba(0, 0, 0, 0.05) 40%,
+      transparent 60%
+    );
+    mix-blend-mode: multiply;
+    animation: catalog-shadow-fade-left 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    border-radius: 0.5rem 0 0 0.5rem;
+    z-index: 1;
+  }
+}
+
+/* ANIMATION: RIGHT PAGE FLIP NEXT (soldan katlanarak sola gider) */
+@keyframes catalog-right-flip-next {
+  0% {
+    transform: perspective(2500px) rotateY(0deg) translateZ(0px) scale(1);
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.15);
+  }
+  50% {
+    transform: perspective(2500px) rotateY(-90deg) translateZ(80px) scale(1.02);
+    box-shadow: 16px 0 60px rgba(0, 0, 0, 0.35);
+  }
+  100% {
+    transform: perspective(2500px) rotateY(-180deg) translateZ(0px) scale(1);
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* ANIMATION: LEFT PAGE FLIP PREV (sağdan katlanarak sağa gider) */
+@keyframes catalog-left-flip-prev {
+  0% {
+    transform: perspective(2500px) rotateY(0deg) translateZ(0px) scale(1);
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.15);
+  }
+  50% {
+    transform: perspective(2500px) rotateY(90deg) translateZ(80px) scale(1.02);
+    box-shadow: -16px 0 60px rgba(0, 0, 0, 0.35);
+  }
+  100% {
+    transform: perspective(2500px) rotateY(180deg) translateZ(0px) scale(1);
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* ANIMATION: SHADOW FADE RIGHT */
+@keyframes catalog-shadow-fade-right {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ANIMATION: SHADOW FADE LEFT */
+@keyframes catalog-shadow-fade-left {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* React Phone Number Input Custom Styles */
+.PhoneInput {
+  @apply w-full;
+}
+
+.PhoneInputInput {
+  @apply w-full px-4 py-3 border border-natural-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-ivosis-500 focus:border-transparent transition-all duration-300 text-sm;
+}
+
+.PhoneInputCountrySelect {
+  @apply mr-2 px-2 py-3 border border-natural-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-ivosis-500 focus:border-transparent;
+}
+
+.PhoneInputCountryIcon {
+  @apply w-6 h-6;
+}
+
+.phone-input-error .PhoneInputInput {
+  @apply border-reds-400 focus:ring-reds-500;
 }

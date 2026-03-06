@@ -22,15 +22,15 @@ export default function DashboardPage() {
     return null
   }
 
-  const handleSignOut = async () => {
-    await signOut()
-    router.push('/login')
+  const handleSignOut = () => {
+    signOut()
   }
 
   return (
     <div>
       <h1>Dashboard</h1>
-      <p>Hoş geldin, {user.email}</p>
+      <p>Hoş geldin, {user.name} {user.surname}</p>
+      <p>Email: {user.email}</p>
       
       <button onClick={handleSignOut}>
         Çıkış Yap

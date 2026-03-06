@@ -1,3 +1,7 @@
+// Bu dosya artık kullanılmıyor - Spring Boot backend'e geçildi
+// Eski Supabase bağlantısı referans için yorumda bırakıldı
+
+/*
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -10,3 +14,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+*/
+
+// Yeni backend için auth-api ve api-client kullanılıyor
+// Bkz: src/lib/auth-api.ts ve src/lib/api-client.ts
